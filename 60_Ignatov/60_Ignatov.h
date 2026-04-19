@@ -155,5 +155,69 @@ struct error
     string token;       ///< Токен, вызвавший ошибку
 };
 
+/*
+ * @brief Проверка, является ли токен операндом.
+ * @param[in] token Входной токен.
+ * @return true если токен является операндом, иначе false.
+ */
+bool isOperand(const string& token);
 
+/*
+ * @brief Проверка, является ли токен операцией.
+ * @param token[in] Входной токен.
+ * @return true если токен является операцией, иначе false.
+ */
+bool isOperation(const string& token);
+
+/*
+ * @brief Определение типа операции.
+ * @param token[in] Входной токен.
+ * @return operandType Тип операции.
+ */
+exprNodeType getOperationType(const string& token);
+
+/*
+ * @brief Разбиение строки на токены с сохранением позиций.
+ * @param[in] line Входная строка выражения.
+ * @return vector<pair<string, int>> Список токенов и их позиций.
+ */
+vector<pair<string, int>> tokenize(const string& line);
+
+/*
+ * @brief Построение дерева троично-логического выражения.
+ * @param tokens[in] Вектор токенов.
+ * @param errors[out] Вектор для хранения ошибок.
+ * @return exprNode* Корень дерева выражения или nullptr при ошибке.
+ */
+exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& errors);
+
+/*
+ * @brief Парсит троично-логическое выражение
+ * @param line[in] Входная строка выражения.
+ * @param errors[out] Вектор для хранения ошибок.
+ * @return exprNode* Корень дерева выражения или nullptr при ошибке.
+ */
+exprNode* parseExpression(const string& line, vector<error>& errors);
+
+/*
+ * @brief Генерация представления дерева в формате Graphviz.
+ * @param root[in] Указатель на корень дерева выражения.
+ * @param out[out] Поток вывода, в который записывается результат.
+ */
+void generateGraph(exprNode* root, ofstream& out);
+
+/*
+ * @brief Записывает дерево выражения в файл в формате Graphviz (DOT).
+ * @param root[in] Указатель на корень дерева выражения.
+ * @param out[out] Поток вывода, в который записывается результат.
+ */
+void writeGraph(exprNode* root, ofstream& out);
+
+/*
+ * @brief Главная функция программы.
+ * @param argc[in] Количество аргументов командной строки.
+ * @param argv[in] Аргументы командной строки: argv[1] — входной файл, argv[2] — выходной файл.
+ * @return int Код завершения программы.
+ */
+int main(int argc, char* argv[]);
 
