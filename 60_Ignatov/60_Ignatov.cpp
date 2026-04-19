@@ -92,3 +92,54 @@ void exprNode::setType(exprNodeType type)
 }
 
 
+int exprNode::calculate(exprNode* node)
+{
+    return 0;
+}
+
+bool isOperand(const string& token)
+{
+    return false;
+}
+
+exprNodeType getOperationType(const string& token)
+{
+    return VALUE;
+}
+
+vector<pair<string, int>> tokenize(const string& line)
+{
+    vector<pair<string, int>> tokens = {};
+
+    return tokens;
+}
+
+bool isOperation(const string& token)
+{
+    return false;
+}
+
+exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& errors)
+{
+    return nullptr;
+}
+
+exprNode* parseExpression(const string& line, vector<error>& errors)
+{
+    return nullptr;
+}
+
+void generateGraph(exprNode* root, ofstream& out)
+{
+    return;
+}
+
+void writeGraph(exprNode* root, ofstream& out)
+{
+    return;
+}
+
+int main(int argc, char* argv[])
+{
+    return 0;
+}
