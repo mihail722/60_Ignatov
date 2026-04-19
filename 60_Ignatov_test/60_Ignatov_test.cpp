@@ -650,6 +650,383 @@ namespace My60Ignatovtest
             delete expected;
             delete result;
         }
+    };
 
+    TEST_CLASS(TestParseExpression)
+    {
+    public:
+
+        // 1. "Выражение из одного операнда"
+        TEST_METHOD(Parse_SingleOperand)
+        {
+            vector<error> errors;
+            auto result = parseExpression("1", errors);
+
+            auto expected = makeValue(1, 0);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 2. "Одиночная унарная операция"
+        TEST_METHOD(Parse_UnaryOperation)
+        {
+            vector<error> errors;
+            auto result = parseExpression("1 !", errors);
+
+            auto expected = makeOp(NOT, nullptr, makeValue(1, 0), 2);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 3. "Одиночная бинарная операция"
+        TEST_METHOD(Parse_BinaryOperation)
+        {
+            vector<error> errors;
+            auto result = parseExpression("1 0 ^", errors);
+
+            auto expected = makeOp(AND, makeValue(1, 0), makeValue(0, 2), 4);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 4. "Несколько операций"
+        TEST_METHOD(Parse_MultipleOperations)
+        {
+            vector<error> errors;
+            auto result = parseExpression("1 0 ^ 1 ! -1 -> <->", errors);
+
+            auto expected = makeOp(EQUIVALENCE, makeOp(AND, makeValue(1, 0), makeValue(0, 2), 4), makeOp(IMPLICATION,
+                makeOp(NOT, nullptr, makeValue(1, 6), 8), makeValue(-1, 10), 13), 16);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 5. "Выражение из 101 операции"
+        TEST_METHOD(Parse_TooManyOperations)
+        {
+            string input = "1 1 ^";
+            for (int i = 0;i < 100;i++)
+            {
+                input += " 1 ^";
+            }
+
+            vector<error> errors;
+            parseExpression(input, errors);
+
+            vector<error> expected = { {TOO_MANY_OPERATION, 0, 0, ""} };
+
+            assertErrorsEqual(errors, expected);
+
+        }
+
+        // 6. "Отсутствует операция"
+        TEST_METHOD(Parse_MissingOperation)
+        {
+            vector<error> errors;
+            parseExpression("1 0 ^ 1 ! -1 ->", errors);
+
+            vector<error> expected = { {MISSING_OPERATION, 13, 4, ""} };
+
+            assertErrorsEqual(errors, expected);
+        }
+
+        // 7. "Недостаточно одного операнда"
+        TEST_METHOD(Parse_MissingOperandBinary)
+        {
+            vector<error> errors;
+            parseExpression("1 0 ^ 1 ! -1 -> <-> v", errors);
+
+            vector<error> expected = { {MISSING_OPERAND, 20, 0, "v"} };
+
+            assertErrorsEqual(errors, expected);
+        }
+
+        // 8. "Недостаточно обоих операндов"
+        TEST_METHOD(Parse_NoOperands)
+        {
+            vector<error> errors;
+            parseExpression("v", errors);
+
+            vector<error> expected = { {MISSING_OPERAND, 0, 0, "v"} };
+
+            assertErrorsEqual(errors, expected);
+        }
+
+        // 9. "Унарная операция без операнда"
+        TEST_METHOD(Parse_NotWithoutOperand)
+        {
+            vector<error> errors;
+            parseExpression("!", errors);
+
+            vector<error> expected = { {MISSING_OPERAND, 0, 0, "!"} };
+
+            assertErrorsEqual(errors, expected);
+        }
+
+        // 10. "Некорректная последовательность символов"
+        TEST_METHOD(Parse_InvalidSymbol)
+        {
+            vector<error> errors;
+            parseExpression("1234 0 ^", errors);
+
+            vector<error> expected = { {INVALID_SYMBOL, 0, 0, "1234"} };
+
+            assertErrorsEqual(errors, expected);
+        }
+
+        // 11. "Множество ошибок"
+        TEST_METHOD(Parse_MultipleErrors)
+        {
+            vector<error> errors;
+            parseExpression("1234 0 ^ 167dfddf ! -1 -> <-> v", errors);
+
+            vector<error> expected =
+            {
+                {INVALID_SYMBOL, 0, 0, "1234"},
+                {INVALID_SYMBOL, 9, 0, "167dfddf"},
+                {MISSING_OPERAND, 30, 0, "v"}
+            };
+
+            assertErrorsEqual(errors, expected);
+        }
+
+        // 12. "Пустая строка"
+        TEST_METHOD(Parse_Empty)
+        {
+            vector<error> errors;
+            auto result = parseExpression("", errors);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsNull(result);
+
+            delete result;
+        }
+
+        // 13. "Только операции"
+        TEST_METHOD(Parse_OnlyOperators)
+        {
+            vector<error> errors;
+            parseExpression("! ! ^ v ! ->", errors);
+
+            vector<error> expected =
+            {
+                {MISSING_OPERAND, 0, 0, "!"},
+                {MISSING_OPERAND, 4, 0, "^"},
+                {MISSING_OPERAND, 6, 0, "v"},
+                {MISSING_OPERAND, 10, 0, "->"}
+            };
+
+            assertErrorsEqual(errors, expected);
+        }
+
+        // 14. "Только операнды"
+        TEST_METHOD(Parse_OnlyOperands)
+        {
+            vector<error> errors;
+            parseExpression("1 0 -1 0 1", errors);
+
+            vector<error> expected =
+            {
+                {MISSING_OPERATION, 9, 7, ""},
+                {MISSING_OPERATION, 7, 4, ""},
+                {MISSING_OPERATION, 4, 2, ""},
+                {MISSING_OPERATION, 2, 0, ""}
+            };
+
+            assertErrorsEqual(errors, expected);
+        }
+
+        // 15. "Ровно 100 операций"
+        TEST_METHOD(Parse_Exactly100Operations)
+        {
+            string input = "1 1 ^";
+            for (int i = 0; i < 99; i++)
+            {
+                input += " 1 ^";
+            }
+
+            vector<error> errors;
+            auto result = parseExpression(input, errors);
+
+            stack<exprNode*> st;
+
+            st.push(makeValue(1, 0));
+            st.push(makeValue(1, 2));
+
+            auto right = st.top(); st.pop();
+            auto left = st.top(); st.pop();
+
+            st.push(makeOp(AND, left, right, 4));
+
+            int currentPos = 6;
+
+            for (int i = 0; i < 99; i++)
+            {
+                st.push(makeValue(1, currentPos));
+                currentPos += 2;
+
+                auto r = st.top(); st.pop();
+                auto l = st.top(); st.pop();
+
+                st.push(makeOp(AND, l, r, currentPos));
+                currentPos += 2;
+            }
+
+            auto expected = st.top();
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 16. "Лидирующие пробелы"
+        TEST_METHOD(Parse_LeadingSpaces)
+        {
+            vector<error> errors;
+            auto result = parseExpression("   1 0 v", errors);
+
+            auto expected = makeOp(OR, makeValue(1, 3), makeValue(0, 5), 7);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 17. "Замыкающие пробелы"
+        TEST_METHOD(Parse_TrailingSpaces)
+        {
+            vector<error> errors;
+            auto result = parseExpression("1 0 v   ", errors);
+
+            auto expected = makeOp(OR, makeValue(1, 0), makeValue(0, 2), 4);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 18. "Многочисленные пробелы"
+        TEST_METHOD(Parse_ManySpaces)
+        {
+            vector<error> errors;
+            auto result = parseExpression("   1   0  v   ", errors);
+
+            auto expected = makeOp(OR, makeValue(1, 3), makeValue(0, 7), 10);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 19. "Табуляция"
+        TEST_METHOD(Parse_Tab)
+        {
+            vector<error> errors;
+            auto result = parseExpression("\t1\t0\tv\t", errors);
+
+            auto expected = makeOp(OR, makeValue(1, 1), makeValue(0, 3), 5);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 20. "Табуляция и пробелы"
+        TEST_METHOD(Parse_TabSpaces)
+        {
+            vector<error> errors;
+            auto result = parseExpression("\t  1\t0 \t v\t", errors);
+
+            auto expected = makeOp(OR, makeValue(1, 3), makeValue(0, 5), 9);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 21. "Только пробелы"
+        TEST_METHOD(Parse_Spaces)
+        {
+            vector<error> errors;
+            auto result = parseExpression("      ", errors);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsNull(result);
+
+            delete result;
+        }
+
+        // 22. "Переводы строк"
+        TEST_METHOD(Parse_LineFeed)
+        {
+            vector<error> errors;
+            auto result = parseExpression("1\n0\nv", errors);
+
+            auto expected = makeOp(OR, makeValue(1, 0), makeValue(0, 2), 4);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 23. "Переводы строк и пробелы"
+        TEST_METHOD(Parse_LineFeedSpaces)
+        {
+            vector<error> errors;
+            auto result = parseExpression("1 0\nv", errors);
+
+            auto expected = makeOp(OR, makeValue(1, 0), makeValue(0, 2), 4);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
+
+        // 24. "Переводы строк, и пробелы, и табуляция"
+        TEST_METHOD(Parse_LineFeedSpacesTab)
+        {
+            vector<error> errors;
+            auto result = parseExpression("  1\n0\nv", errors);
+
+            auto expected = makeOp(OR, makeValue(1, 2), makeValue(0, 4), 6);
+
+            assertErrorsEqual(errors, {});
+            Assert::IsTrue(compareTrees(result, expected));
+
+            delete expected;
+            delete result;
+        }
     };
 }
