@@ -1029,4 +1029,457 @@ namespace My60Ignatovtest
             delete result;
         }
     };
+
+    TEST_CLASS(TestCalculate)
+    {
+    public:
+
+        // 1. "Одиночная операция NOT (1)"
+        TEST_METHOD(Calc_Not_1)
+        {
+            auto node = makeOp(NOT, nullptr, makeValue(1, 0), 2);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 2. "Одиночная операция NOT (-1)"
+        TEST_METHOD(Calc_Not_Minus1)
+        {
+            auto node = makeOp(NOT, nullptr, makeValue(-1, 0), 2);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 3. "Одиночная операция NOT (0)"
+        TEST_METHOD(Calc_Not_0)
+        {
+            auto node = makeOp(NOT, nullptr, makeValue(0, 0), 2);
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 4. "Одиночная операция AND (1, 0)"
+        TEST_METHOD(Calc_And_1_0)
+        {
+            auto node = makeOp(AND, makeValue(1, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 5. "Одиночная операция AND (1, -1)"
+        TEST_METHOD(Calc_And_1_Minus1)
+        {
+            auto node = makeOp(AND, makeValue(1, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 6. "Одиночная операция AND (1, 1)"
+        TEST_METHOD(Calc_And_1_1)
+        {
+            auto node = makeOp(AND, makeValue(1, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 7. "Одиночная операция AND (-1, 0)"
+        TEST_METHOD(Calc_And_Minus1_0)
+        {
+            auto node = makeOp(AND, makeValue(-1, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 8. "Одиночная операция AND (-1, 1)"
+        TEST_METHOD(Calc_And_Minus1_1)
+        {
+            auto node = makeOp(AND, makeValue(-1, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 9. "Одиночная операция AND (-1, -1)"
+        TEST_METHOD(Calc_And_Minus1_Minus1)
+        {
+            auto node = makeOp(AND, makeValue(-1, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 10. "Одиночная операция AND (0, 0)"
+        TEST_METHOD(Calc_And_0_0)
+        {
+            auto node = makeOp(AND, makeValue(0, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 11. "Одиночная операция AND (0, 1)"
+        TEST_METHOD(Calc_And_0_1)
+        {
+            auto node = makeOp(AND, makeValue(0, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 12. "Одиночная операция AND (0, -1)"
+        TEST_METHOD(Calc_And_0_Minus1)
+        {
+            auto node = makeOp(AND, makeValue(0, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 13. "Одиночная операция OR (-1, 0)"
+        TEST_METHOD(Calc_Or_Minus1_0)
+        {
+            auto node = makeOp(OR, makeValue(-1, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 14. "Одиночная операция OR (-1, 1)"
+        TEST_METHOD(Calc_Or_Minus1_1)
+        {
+            auto node = makeOp(OR, makeValue(-1, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 15. "Одиночная операция OR (-1, -1)"
+        TEST_METHOD(Calc_Or_Minus1_Minus1)
+        {
+            auto node = makeOp(OR, makeValue(-1, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 16. "Одиночная операция OR (1, 0)"
+        TEST_METHOD(Calc_Or_1_0)
+        {
+            auto node = makeOp(OR, makeValue(1, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 17. "Одиночная операция OR (1, 1)"
+        TEST_METHOD(Calc_Or_1_1)
+        {
+            auto node = makeOp(OR, makeValue(1, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 18. "Одиночная операция OR (1, -1)"
+        TEST_METHOD(Calc_Or_1_Minus1)
+        {
+            auto node = makeOp(OR, makeValue(1, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 19. "Одиночная операция OR (0, 0)"
+        TEST_METHOD(Calc_Or_0_0)
+        {
+            auto node = makeOp(OR, makeValue(0, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 20. "Одиночная операция OR (0, 1)"
+        TEST_METHOD(Calc_Or_0_1)
+        {
+            auto node = makeOp(OR, makeValue(0, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 21. "Одиночная операция OR (0, -1)"
+        TEST_METHOD(Calc_Or_0_Minus1)
+        {
+            auto node = makeOp(OR, makeValue(0, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 22. "Одиночная операция IMPLICATION (-1, 1)"
+        TEST_METHOD(Calc_Impl_Minus1_1)
+        {
+            auto node = makeOp(IMPLICATION, makeValue(-1, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 23. "Одиночная операция IMPLICATION (-1, 0)"
+        TEST_METHOD(Calc_Impl_Minus1_0)
+        {
+            auto node = makeOp(IMPLICATION, makeValue(-1, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 24. "Одиночная операция IMPLICATION (-1, -1)"
+        TEST_METHOD(Calc_Impl_Minus1_Minus1)
+        {
+            auto node = makeOp(IMPLICATION, makeValue(-1, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 25. "Одиночная операция IMPLICATION (1, 1)"
+        TEST_METHOD(Calc_Impl_1_1)
+        {
+            auto node = makeOp(IMPLICATION, makeValue(1, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 26. "Одиночная операция IMPLICATION (1, 0)"
+        TEST_METHOD(Calc_Impl_1_0)
+        {
+            auto node = makeOp(IMPLICATION, makeValue(1, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 27. "Одиночная операция IMPLICATION (1, -1)"
+        TEST_METHOD(Calc_Impl_1_Minus1)
+        {
+            auto node = makeOp(IMPLICATION, makeValue(1, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 28. "Одиночная операция IMPLICATION (0, 1)"
+        TEST_METHOD(Calc_Impl_0_1)
+        {
+            auto node = makeOp(IMPLICATION, makeValue(0, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 29. "Одиночная операция IMPLICATION (0, -1)"
+        TEST_METHOD(Calc_Impl_0_Minus1)
+        {
+            auto node = makeOp(IMPLICATION, makeValue(0, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 30. "Одиночная операция IMPLICATION (0, 0)"
+        TEST_METHOD(Calc_Impl_0_0)
+        {
+            auto node = makeOp(IMPLICATION, makeValue(0, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 31. "Одиночная операция EQUIVALENCE (-1, -1)"
+        TEST_METHOD(Calc_Equiv_Minus1_Minus1)
+        {
+            auto node = makeOp(EQUIVALENCE, makeValue(-1, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 32. "Одиночная операция EQUIVALENCE (-1, 1)"
+        TEST_METHOD(Calc_Equiv_Minus1_1)
+        {
+            auto node = makeOp(EQUIVALENCE, makeValue(-1, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 33. "Одиночная операция EQUIVALENCE (-1, 0)"
+        TEST_METHOD(Calc_Equiv_Minus1_0)
+        {
+            auto node = makeOp(EQUIVALENCE, makeValue(-1, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 34. "Одиночная операция EQUIVALENCE (1, -1)"
+        TEST_METHOD(Calc_Equiv_1_Minus1)
+        {
+            auto node = makeOp(EQUIVALENCE, makeValue(1, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 35. "Одиночная операция EQUIVALENCE (1, 1)"
+        TEST_METHOD(Calc_Equiv_1_1)
+        {
+            auto node = makeOp(EQUIVALENCE, makeValue(1, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 36. "Одиночная операция EQUIVALENCE (1, 0)"
+        TEST_METHOD(Calc_Equiv_1_0)
+        {
+            auto node = makeOp(EQUIVALENCE, makeValue(1, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 37. "Одиночная операция EQUIVALENCE (0, -1)"
+        TEST_METHOD(Calc_Equiv_0_Minus1)
+        {
+            auto node = makeOp(EQUIVALENCE, makeValue(0, 0), makeValue(-1, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 38. "Одиночная операция EQUIVALENCE (0, 1)"
+        TEST_METHOD(Calc_Equiv_0_1)
+        {
+            auto node = makeOp(EQUIVALENCE, makeValue(0, 0), makeValue(1, 2), 4);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 39. "Одиночная операция EQUIVALENCE (0, 0)"
+        TEST_METHOD(Calc_Equiv_0_0)
+        {
+            auto node = makeOp(EQUIVALENCE, makeValue(0, 0), makeValue(0, 2), 4);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 40. "Дерево состоит из одного операнда (1)"
+        TEST_METHOD(Calc_SingleNode_1)
+        {
+            auto node = makeValue(1, 0);
+            Assert::AreEqual(1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 41. "Дерево состоит из одного операнда (0)"
+        TEST_METHOD(Calc_SingleNode_0)
+        {
+            auto node = makeValue(0, 0);
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 42. "Дерево состоит из одного операнда (-1)"
+        TEST_METHOD(Calc_SingleNode_Minus1)
+        {
+            auto node = makeValue(-1, 0);
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 43. "Комплексный тест 1"
+        TEST_METHOD(Calc_Complex_1)
+        {
+            auto node = makeOp(EQUIVALENCE, makeOp(AND, makeValue(1, 0), makeValue(0, 2), 4), makeOp(IMPLICATION,
+                makeOp(NOT, nullptr, makeValue(1, 6), 8), makeValue(-1, 10), 13), 16);
+
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 44. "Комплексный тест 2"
+        TEST_METHOD(Calc_Complex_2)
+        {
+            auto node = makeOp(AND,
+                makeOp(EQUIVALENCE,
+                    makeOp(AND, makeValue(-1, 0), makeValue(0, 2), 5),
+                    makeOp(NOT, nullptr, makeValue(1, 7), 9),
+                    11),
+                makeOp(NOT,
+                    nullptr,
+                    makeOp(OR,
+                        makeValue(-1, 22),
+                        makeOp(IMPLICATION,
+                            makeValue(1, 15),
+                            makeValue(0, 17),
+                            19),
+                        25),
+                    27),
+                29);
+
+            Assert::AreEqual(0, node->calculate(node));
+
+            delete node;
+        }
+
+        // 45. "Комплексный тест 3"
+        TEST_METHOD(Calc_Complex_3)
+        {
+            auto node = makeOp(IMPLICATION,
+                makeOp(OR,
+                    makeValue(0, 9),
+                    makeOp(NOT,
+                        nullptr,
+                        makeOp(AND,
+                            makeValue(0, 0),
+                            makeValue(-1, 2),
+                            5),
+                        19),
+                    25),
+                makeOp(EQUIVALENCE,
+                    makeValue(1, 13),
+                    makeValue(-1, 15),
+                    18),
+                22);
+
+            Assert::AreEqual(-1, node->calculate(node));
+
+            delete node;
+        }
+
+        // 46. "Вместо дерева передан nullptr"
+        TEST_METHOD(Calc_Nullptr)
+        {
+            exprNode* node = nullptr;
+            Assert::AreEqual(0, exprNode::calculate(node));
+
+            delete node;
+        }
+    };
 }
