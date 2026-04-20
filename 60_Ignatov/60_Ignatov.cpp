@@ -146,7 +146,34 @@ bool isOperation(const string& token)
 
 exprNodeType getOperationType(const string& token)
 {
-    return VALUE;
+    exprNodeType result = VALUE; // Записать в результат VALUE
+
+    // Если токен – «!»
+    if (token == "!")
+    {
+        result = NOT; // Записать в результат NOT
+    }
+    // Если токен – «^»
+    if (token == "^")
+    {
+        result = AND; // Записать в результат AND
+    }
+    // Если токен – «v»
+    if (token == "v")
+    {
+        result = OR; // Записать в результат OR
+    }
+    // Если токен – «->»
+    if (token == "->")
+    {
+        result = IMPLICATION; // Записать в результат IMPLICATION
+    }
+    // Если токен – «<->»
+    if (token == "<->")
+    {
+        result = EQUIVALENCE; // Записать в результат EQUIVALENCE
+    }
+    return result; // Вернуть результат
 }
 
 vector<pair<string, int>> tokenize(const string& line)
