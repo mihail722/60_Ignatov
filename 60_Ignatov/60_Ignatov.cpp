@@ -139,6 +139,11 @@ bool isOperand(const string& token)
     return false;
 }
 
+bool isOperation(const string& token)
+{   // Вернуть true, если токен равен «!», или «^», или «v», или «->», или «<->», иначе вернуть false
+    return token == "!" || token == "^" || token == "v" || token == "->" || token == "<->";
+}
+
 exprNodeType getOperationType(const string& token)
 {
     return VALUE;
@@ -149,11 +154,6 @@ vector<pair<string, int>> tokenize(const string& line)
     vector<pair<string, int>> tokens = {};
 
     return tokens;
-}
-
-bool isOperation(const string& token)
-{
-    return false;
 }
 
 exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& errors)
