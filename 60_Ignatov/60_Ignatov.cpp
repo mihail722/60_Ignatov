@@ -135,8 +135,8 @@ void exprNode::setType(exprNodeType type)
 }
 
 bool isOperand(const string& token)
-{
-    return false;
+{   // Вернуть true, если токен равен «-1», или «1», или «0», иначе вернуть false
+    return token == "-1" || token == "0" || token == "1";
 }
 
 bool isOperation(const string& token)
