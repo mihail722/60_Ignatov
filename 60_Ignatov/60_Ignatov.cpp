@@ -178,9 +178,22 @@ exprNodeType getOperationType(const string& token)
 
 vector<pair<string, int>> tokenize(const string& line)
 {
-    vector<pair<string, int>> tokens = {};
+    vector<pair<string, int>> tokens; // Создать вектор токенов
+    size_t pos = 0;
 
-    return tokens;
+    // Пока в строке есть не пробельные символы 
+    while ((line.find_first_not_of(" \t\n", pos)) != string::npos)
+    {
+        pos = line.find_first_not_of(" \t\n", pos); // Найти позицию первого, не пробельного символа(find_first_not_of)
+
+        size_t end = line.find_first_of(" \t\n", pos); // Найти позицию ближайшего пробельного символа(find_first_of)
+
+        string token = line.substr(pos, end - pos); // Зафиксировать найденный токен
+        tokens.push_back({ token, (int)pos }); // Записать в список найденный токен
+
+        pos = end; // Перейти к поиску следующего токена
+    } 
+    return tokens; // Вернуть вектор токенов
 }
 
 exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& errors)
