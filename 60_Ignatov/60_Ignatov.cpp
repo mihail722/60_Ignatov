@@ -11,6 +11,49 @@
 
 int exprNode::globalCounter = 0;
 
+int exprNode::calculate(exprNode* node)
+{
+    int result;
+
+    // Если передан nullptr
+    if (!node) 
+    {
+        return 0; // Вернуть 0
+    }
+    // Иначе Если тип узла – VALUE
+    else if (node->getType() == VALUE)
+    {
+        result = node->getValue(); // Записать в результат значение узла
+    }
+    // Иначе Если тип узла – NOT
+    else if (node->getType() == NOT)
+    {
+        result = -calculate(node->getRight()); // Вычислить операцию NOT и записать результат
+    }
+    // Иначе Если тип узла – AND
+    else if (node->getType() == AND)
+    {
+        result = min(calculate(node->getLeft()), calculate(node->getRight())); // Вычислить операцию AND и записать результат 
+    }
+    // Иначе Если тип узла – OR
+    else if (node->getType() == OR)
+    {
+        result = max(calculate(node->getLeft()), calculate(node->getRight())); // Вычислить операцию OR и записать результат 
+    }
+    // Иначе Если тип узла – IMPLICATION
+    else if (node->getType() == IMPLICATION)
+    {
+        result = max(-calculate(node->getLeft()), calculate(node->getRight())); // Вычислить операцию IMPLICATION и записать результат
+    }
+    // Иначе Если тип узла – EQUIVALENCE
+    else if (node->getType() == EQUIVALENCE)
+    {
+        result = ((calculate(node->getLeft()) == calculate(node->getRight())) ? 1 : -1); // Вычислить операцию EQUIVALENCE и записать результат
+    }
+    node->value = result; // Записать в значение узла полученный результат
+    return result; // Вернуть результат
+}
+
 // Конструктор операнда
 exprNode::exprNode(int val, int pos)
 {
@@ -89,12 +132,6 @@ void exprNode::setRight(exprNode* node)
 void exprNode::setType(exprNodeType type)
 {
     this->type = type;
-}
-
-
-int exprNode::calculate(exprNode* node)
-{
-    return 0;
 }
 
 bool isOperand(const string& token)
