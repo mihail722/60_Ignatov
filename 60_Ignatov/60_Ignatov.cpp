@@ -357,7 +357,9 @@ void generateGraph(exprNode* root, ofstream& out)
 
 void writeGraph(exprNode* root, ofstream& out)
 {
-    return;
+    out << "digraph output {\n"; // Добавить в файл строку «digraph output {»
+    generateGraph(root, out); // Сгенерировать описание дерева
+    out << "}\n"; // Добавить в файл строку «}»
 }
 
 int main(int argc, char* argv[])
