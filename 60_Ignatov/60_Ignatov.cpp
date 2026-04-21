@@ -290,7 +290,11 @@ exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& erro
 
 exprNode* parseExpression(const string& line, vector<error>& errors)
 {
-    return nullptr;
+    auto tokens = tokenize(line); // Разбить строку на токены(подстроки)
+
+    exprNode* root = buildTree(tokens, errors); // Построить дерево выполнения выражения 
+     
+    return root; // Вернуть корень дерева выражения
 }
 
 void generateGraph(exprNode* root, ofstream& out)
