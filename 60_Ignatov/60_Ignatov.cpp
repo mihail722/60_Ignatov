@@ -299,7 +299,60 @@ exprNode* parseExpression(const string& line, vector<error>& errors)
 
 void generateGraph(exprNode* root, ofstream& out)
 {
-    return;
+    // Если узел пуст, завершить работу функции
+    if (!root)
+    {
+        return;
+    }
+    string label; // Создать строку для описания узла дерева
+    
+    // Если узел – операнд
+    if (root->getType() == VALUE)
+    {
+        label = to_string(root->getValue()); // Записать в строку его значение
+    }
+    // Иначе Если операция NOT
+    else if (root->getType() == NOT)
+    {
+        label = "! [" + to_string(root->getValue()) + "]"; // Записать в строку (! [«значение после выполнения операции»])
+    }
+    // Иначе Если операция AND
+    else if (root->getType() == AND)
+    {
+        label = "^ [" + to_string(root->getValue()) + "]"; // Записать в строку (^ [«значение после выполнения операции»])
+    } 
+    // Иначе Если операция OR
+    else if (root->getType() == OR)
+    {
+        label = "v [" + to_string(root->getValue()) + "]"; // Записать в строку (v [«значение после выполнения операции»])
+    }
+    // Иначе Если операция IMPLICATION
+    else if (root->getType() == IMPLICATION)
+    {
+        label = "-> [" + to_string(root->getValue()) + "]"; // Записать в строку (-> [«значение после выполнения операции»])
+    }
+    // Иначе Если операция EQUIVALENCE
+    else if (root->getType() == EQUIVALENCE)
+    {
+        label = "<-> [" + to_string(root->getValue()) + "]"; // Записать в строку (<-> [«значение после выполнения операции»])
+    }
+    // Записать в файл строку в формате «название узла [label = строка для описания узла дерева];»
+    out << root->getId() << " [label = \"" << label << "\"];\n";
+    
+    // Если есть левый потомок
+    if (root->getLeft())
+    {
+        generateGraph(root->getLeft(), out); // Рекурсивно вызвать функцию
+        // Записать в файл связь между узлами в формате «название узла 1 -> название узла 2»
+        out << root->getLeft()->getId() << " -> " << root->getId() << ";\n";
+    }
+    // Если есть правый потомок
+    if (root->getRight())
+    {
+        generateGraph(root->getRight(), out); // Рекурсивно вызвать функцию
+        // Записать в файл связь между узлами в формате «название узла 1 -> название узла 2»
+        out << root->getRight()->getId() << " -> " << root->getId() << ";\n";
+    }
 }
 
 void writeGraph(exprNode* root, ofstream& out)
