@@ -364,5 +364,85 @@ void writeGraph(exprNode* root, ofstream& out)
 
 int main(int argc, char* argv[])
 {
-    return 0;
+    // Если в командную строку передано не 3 аргумента
+    if (argc != 3)
+    {
+        cout << "Incorrect number of arguments\n"; // Выдать сообщение об ошибке
+        return 1; // Завершить работу программы
+    }
+    ifstream input(argv[1]); // Считать входной файл
+
+    // Если входной файл не существует
+    if (!input.is_open())
+    {
+        cout << "The input data file specified is invalid. The file may not exist.\n"; // Выдать сообщение об ошибке 
+        return 1; // Завершить работу программы 
+    }
+    string line;
+
+    // Если входной файл пустой
+    if (!getline(input, line))
+    {
+        cout << "The input data file is empty.\n"; // Выдать сообщение об ошибке 
+        return 1; // Завершить работу программы
+    }
+    string secondLine;
+
+    // Если во входном файле строк больше одной
+    if (getline(input, secondLine))
+    {
+        cout << "The program accepts single line files as input. Place each line in a separate file.\n"; // Выдать сообщение об ошибке 
+        return 1; // Завершить работу программы
+    }
+
+    // Если длина строки больше 1000 символов
+    if (line.length() > 1000)
+    {
+        cout << "The line length exceeds the specified limit of 1000 characters.\n"; // Выдать сообщение об ошибке 
+        return 1; // Завершить работу программы
+    }
+
+    vector<error> errors;
+
+    exprNode* root = parseExpression(line, errors); // Распарсить строку из входного файла
+    
+    // Если в результате парсинга произошли ошибки
+    if (!errors.empty())
+    {   // Выдать сообщение о каждой произошедшей ошибке
+        for (auto& err : errors)
+        {
+            if (err.type == INVALID_SYMBOL)
+            {
+                cout << "Character sequence \"" << err.token << "\" is incorrect at position \"" << err.position << "\".\n";
+            }
+            else if (err.type == MISSING_OPERAND)
+            {
+                cout << "Not enough operands to perform the operation \"" << err.token << "\" in position \"" << err.position << "\".\n";
+            }
+            else if (err.type == MISSING_OPERATION)
+            {
+                cout << "No operation available for potential operands at positions \"" << err.position << "\" and \"" << err.position2 << "\".\n";
+            }
+            else if (err.type == TOO_MANY_OPERATION)
+            {
+                cout << "The number of transactions exceeds the set limit of 100.\n";
+            }
+        }
+        delete root; // Удалить корень дерева
+        return 1; // Завершить работу программы
+    } 
+    ofstream output(argv[2]); // Считать выходной файл
+
+    // Если выходной файл невозможно создать
+    if (!output.is_open())
+    {
+        cout << "The specified output file is invalid. The specified location may not exist or you may not have write permissions.\n"; // Выдать сообщение об ошибке 
+        return 1; // Завершить работу программы
+    }
+
+    exprNode::calculate(root); // Рассчитать дерево 
+
+    writeGraph(root, output); // Сгенерировать описание дерева операций в выходной файл
+
+    return 0; // Завершить работу программы
 }
