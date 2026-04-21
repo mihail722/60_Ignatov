@@ -198,7 +198,94 @@ vector<pair<string, int>> tokenize(const string& line)
 
 exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& errors)
 {
-    return nullptr;
+    stack<exprNode*> st = {}; // Cчитать, что стек пуст
+    int opCount = 0; // Считать, что счётчик количества операций принимает значение 0
+
+    // Для каждого токена
+    for (auto& t : tokens) 
+    {
+        string token = t.first;
+        int pos = t.second;
+        // Если токен является операндом
+        if (isOperand(token))
+        {
+            st.push(new exprNode(stoi(token), pos)); // Создать узел операнда и добавить его в стек
+        }
+        // Иначе Если токен является операцией
+        else if (isOperation(token))
+        {
+            opCount++; // Инкрементировать счётчик операций 
+            exprNodeType type = getOperationType(token); // Определить тип операции
+            
+            // Если тип операции - NOT 
+            if (type == NOT)
+            {
+                exprNode* node = new exprNode(type, nullptr, nullptr, pos); // Создать узел операции
+
+                // Если стек не пустой
+                if (!st.empty())
+                {   // Извлечь 1 элемент из стека и записать его в узел 
+                    node->setRight(st.top());
+                    st.pop();
+                }
+                // Иначе
+                else
+                {
+                    errors.push_back({ MISSING_OPERAND, pos, 0, token }); // Добавить в вектор ошибок, ошибку MISSING_OPERAND
+                }
+                st.push(node); // Добавить в стек полученный узел
+            }
+            // Иначе
+            else
+            {
+                exprNode* node = new exprNode(type, nullptr, nullptr, pos); // Создать узел операции
+                
+                // Если в стеке больше 1 элемента
+                if (st.size() > 1)
+                {   // Извлечь 2 элемента из стека и записать их в узел 
+                    node->setRight(st.top()); st.pop();
+                    node->setLeft(st.top()); st.pop();
+                }
+                // Иначе
+                else
+                {   // Если в стеке 1 элемент
+                    if (st.size() == 1)
+                    {
+                        st.pop(); // Извлечь элемент из стека
+                    } 
+                    errors.push_back({ MISSING_OPERAND, pos, 0, token }); // Добавить в вектор ошибок, ошибку MISSING_OPERAND
+                }
+                st.push(node); // Добавить в стек полученный узел
+            }
+        }
+        // Иначе
+        else
+        {
+            errors.push_back({ INVALID_SYMBOL, pos, 0, token }); // Добавить в вектор ошибок, ошибку INVALID_SYMBOL
+            st.push(new exprNode(0, pos)); // Создать фиктивный узел и добавить его в стек
+        }
+    }
+    // Если найдено больше 100 операций
+    if (opCount > 100)
+    { 
+        errors.push_back({ TOO_MANY_OPERATION, 0, 0, "" }); // Добавить в вектор ошибок, ошибку TOO_MANY_OPERATION 
+    }
+    // Пока в стеке больше 1 элемента
+    while (st.size() > 1)
+    {   // Извлечь элемент из стека 
+        exprNode* n1 = st.top(); st.pop();
+        exprNode* n2 = st.top();
+
+        errors.push_back({ MISSING_OPERATION, n1->getPos(), n2->getPos(), "" }); // Добавить в вектор ошибок, ошибку MISSING_OPERATION
+
+        delete n1; // Удалить извлечённый элемент
+    }
+    // Если стек пустой
+    if (st.empty())
+    {
+        return nullptr; // Вернуть nullptr
+    }
+    return st.top(); // Вернуть верхний элемент стека (корень дерева)
 }
 
 exprNode* parseExpression(const string& line, vector<error>& errors)
