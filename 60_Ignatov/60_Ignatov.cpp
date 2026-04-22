@@ -48,7 +48,7 @@ int exprNode::calculate(exprNode* node)
     // Иначе Если тип узла – EQUIVALENCE
     else if (node->getType() == EQUIVALENCE)
     {
-        result = ((calculate(node->getLeft()) == calculate(node->getRight())) ? 1 : -1); // Вычислить операцию EQUIVALENCE и записать результат
+        result = max(min(-calculate(node->getLeft()), -calculate(node->getRight())), min(calculate(node->getLeft()), calculate(node->getRight()))); // Вычислить операцию EQUIVALENCE и записать результат
     }
     node->value = result; // Записать в значение узла полученный результат
     return result; // Вернуть результат

@@ -1326,7 +1326,7 @@ namespace My60Ignatovtest
         TEST_METHOD(Calc_Equiv_Minus1_0)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(-1, 0), makeValue(0, 2), 4);
-            Assert::AreEqual(-1, node->calculate(node));
+            Assert::AreEqual(0, node->calculate(node));
 
             delete node;
         }
@@ -1353,7 +1353,7 @@ namespace My60Ignatovtest
         TEST_METHOD(Calc_Equiv_1_0)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(1, 0), makeValue(0, 2), 4);
-            Assert::AreEqual(-1, node->calculate(node));
+            Assert::AreEqual(0, node->calculate(node));
 
             delete node;
         }
@@ -1362,7 +1362,7 @@ namespace My60Ignatovtest
         TEST_METHOD(Calc_Equiv_0_Minus1)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(0, 0), makeValue(-1, 2), 4);
-            Assert::AreEqual(-1, node->calculate(node));
+            Assert::AreEqual(0, node->calculate(node));
 
             delete node;
         }
@@ -1371,7 +1371,7 @@ namespace My60Ignatovtest
         TEST_METHOD(Calc_Equiv_0_1)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(0, 0), makeValue(1, 2), 4);
-            Assert::AreEqual(-1, node->calculate(node));
+            Assert::AreEqual(0, node->calculate(node));
 
             delete node;
         }
@@ -1380,7 +1380,7 @@ namespace My60Ignatovtest
         TEST_METHOD(Calc_Equiv_0_0)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(0, 0), makeValue(0, 2), 4);
-            Assert::AreEqual(1, node->calculate(node));
+            Assert::AreEqual(0, node->calculate(node));
 
             delete node;
         }
@@ -1418,7 +1418,7 @@ namespace My60Ignatovtest
             auto node = makeOp(EQUIVALENCE, makeOp(AND, makeValue(1, 0), makeValue(0, 2), 4), makeOp(IMPLICATION,
                 makeOp(NOT, nullptr, makeValue(1, 6), 8), makeValue(-1, 10), 13), 16);
 
-            Assert::AreEqual(-1, node->calculate(node));
+            Assert::AreEqual(0, node->calculate(node));
 
             delete node;
         }
