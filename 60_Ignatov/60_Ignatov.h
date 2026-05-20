@@ -177,19 +177,12 @@ bool isOperation(const string& token);
 exprNodeType getOperationType(const string& token);
 
 /**
- * @brief Разбиение строки на токены с сохранением позиций
- * @param[in] line Входная строка выражения
- * @return vector<pair<string, int>> Список токенов и их позиций
- */
-vector<pair<string, int>> tokenize(const string& line);
-
-/**
  * @brief Построение дерева троично-логического выражения
- * @param[in] tokens Вектор токенов
+ * @param[in] line Входная строка выражения
  * @param[out] errors Вектор для хранения ошибок
  * @return exprNode* Корень дерева выражения или nullptr при ошибке
  */
-exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& errors);
+exprNode* buildTree(const string& line, vector<error>& errors);
 
 /**
  * @brief Парсит троично-логическое выражение
@@ -220,4 +213,3 @@ void writeGraph(exprNode* root, ofstream& out);
  * @return int Код завершения программы: 0 при успешном завершении, иначе 1
  */
 int main(int argc, char* argv[]);
-

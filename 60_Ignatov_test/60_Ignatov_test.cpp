@@ -1,4 +1,4 @@
-#include "pch.h"
+п»ї#include "pch.h"
 #include "CppUnitTest.h"
 #include <vector>
 #include <string>
@@ -90,7 +90,7 @@ namespace My60Ignatovtest
     TEST_CLASS(TokenizeTests)
     {
     public:
-        // 1. "Строка из нескольких слов"
+        // 1. "РЎС‚СЂРѕРєР° РёР· РЅРµСЃРєРѕР»СЊРєРёС… СЃР»РѕРІ"
         TEST_METHOD(TestTokenize_MultipleWords)
         {
             string input = "one two three";
@@ -104,7 +104,7 @@ namespace My60Ignatovtest
             }
         }
 
-        // 2. "Строка из одного слова"
+        // 2. "РЎС‚СЂРѕРєР° РёР· РѕРґРЅРѕРіРѕ СЃР»РѕРІР°"
         TEST_METHOD(TestTokenize_SingleWord)
         {
             string input = "one";
@@ -115,7 +115,7 @@ namespace My60Ignatovtest
             Assert::AreEqual(expected[0].second, result[0].second);
         }
 
-        // 3. "Строка из большого количества слов" (25 слов)
+        // 3. "РЎС‚СЂРѕРєР° РёР· Р±РѕР»СЊС€РѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° СЃР»РѕРІ" (25 СЃР»РѕРІ)
         TEST_METHOD(TestTokenize_LargeAmountOfWords)
         {
             string input = "word1 word2 word3 word4 word5 word6 word7 word8 word9 word10 "
@@ -135,7 +135,7 @@ namespace My60Ignatovtest
             }
         }
 
-        // 4. "Строка с лидирующими пробелами"
+        // 4. "РЎС‚СЂРѕРєР° СЃ Р»РёРґРёСЂСѓСЋС‰РёРјРё РїСЂРѕР±РµР»Р°РјРё"
         TEST_METHOD(TestTokenize_LeadingSpaces)
         {
             string input = "   Hello world";
@@ -149,7 +149,7 @@ namespace My60Ignatovtest
             }
         }
 
-        // 5. "Строка с замыкающими пробелами"
+        // 5. "РЎС‚СЂРѕРєР° СЃ Р·Р°РјС‹РєР°СЋС‰РёРјРё РїСЂРѕР±РµР»Р°РјРё"
         TEST_METHOD(TestTokenize_TrailingSpaces)
         {
             string input = "Hello world ";
@@ -163,7 +163,7 @@ namespace My60Ignatovtest
             }
         }
 
-        // 6. "Много пробелов между словами"
+        // 6. "РњРЅРѕРіРѕ РїСЂРѕР±РµР»РѕРІ РјРµР¶РґСѓ СЃР»РѕРІР°РјРё"
         TEST_METHOD(TestTokenize_MultipleSpacesBetween)
         {
             string input = "Hello    world";
@@ -177,7 +177,7 @@ namespace My60Ignatovtest
             }
         }
 
-        // 7. "Строка с табуляцией"
+        // 7. "РЎС‚СЂРѕРєР° СЃ С‚Р°Р±СѓР»СЏС†РёРµР№"
         TEST_METHOD(TestTokenize_Tabulation)
         {
             string input = "Hello\tworld";
@@ -191,7 +191,7 @@ namespace My60Ignatovtest
             }
         }
 
-        // 8. "Строка с пробелами и табуляцией"
+        // 8. "РЎС‚СЂРѕРєР° СЃ РїСЂРѕР±РµР»Р°РјРё Рё С‚Р°Р±СѓР»СЏС†РёРµР№"
         TEST_METHOD(TestTokenize_SpacesAndTabs)
         {
             string input = " \tHello\tworld ";
@@ -205,7 +205,7 @@ namespace My60Ignatovtest
             }
         }
 
-        // 9. "В строке только пробельные символы"
+        // 9. "Р’ СЃС‚СЂРѕРєРµ С‚РѕР»СЊРєРѕ РїСЂРѕР±РµР»СЊРЅС‹Рµ СЃРёРјРІРѕР»С‹"
         TEST_METHOD(TestTokenize_OnlyWhitespace)
         {
             string input = " \t ";
@@ -213,7 +213,7 @@ namespace My60Ignatovtest
             Assert::AreEqual(0, (int)result.size());
         }
 
-        // 10. "Пустая строка"
+        // 10. "РџСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°"
         TEST_METHOD(TestTokenize_EmptyString)
         {
             string input = "";
@@ -221,7 +221,7 @@ namespace My60Ignatovtest
             Assert::AreEqual(0, (int)result.size());
         }
 
-        // 11. "Строка из одного символа"
+        // 11. "РЎС‚СЂРѕРєР° РёР· РѕРґРЅРѕРіРѕ СЃРёРјРІРѕР»Р°"
         TEST_METHOD(TestTokenize_SingleCharacter)
         {
             string input = "a";
@@ -232,7 +232,7 @@ namespace My60Ignatovtest
             Assert::AreEqual(expected[0].second, result[0].second);
         }
 
-        // 12. "В строке используются специальные символы"
+        // 12. "Р’ СЃС‚СЂРѕРєРµ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ СЃРїРµС†РёР°Р»СЊРЅС‹Рµ СЃРёРјРІРѕР»С‹"
         TEST_METHOD(TestTokenize_SpecialCharacters)
         {
             string input = "(2 + 2) = 4 !";
@@ -246,7 +246,7 @@ namespace My60Ignatovtest
             }
         }
 
-        // 13. "Строка состоит из одинаковых слов"
+        // 13. "РЎС‚СЂРѕРєР° СЃРѕСЃС‚РѕРёС‚ РёР· РѕРґРёРЅР°РєРѕРІС‹С… СЃР»РѕРІ"
         TEST_METHOD(TestTokenize_IdenticalWords) {
             string input = "world world world world world";
             auto result = tokenize(input);
@@ -258,17 +258,17 @@ namespace My60Ignatovtest
             }
         }
 
-        // 14. "Строка из одного огромного слова"
+        // 14. "РЎС‚СЂРѕРєР° РёР· РѕРґРЅРѕРіРѕ РѕРіСЂРѕРјРЅРѕРіРѕ СЃР»РѕРІР°"
         TEST_METHOD(TestTokenize_HugeWord)
         {
-            string input = "sssssqqqqqqQqqqqdddddddVvvvvvvvvvvvFfffffffffdrRrrgl,bl,lffGmbkmgkbkmkf]fl]rflrklfk``~jjdo+++=fKkvmf4;%»%??№";
+            string input = "sssssqqqqqqQqqqqdddddddVvvvvvvvvvvvFfffffffffdrRrrgl,bl,lffGmbkmgkbkmkf]fl]rflrklfk``~jjdo+++=fKkvmf4;%В»%??в„–";
             auto result = tokenize(input);
             Assert::AreEqual(1, (int)result.size());
             Assert::AreEqual(input, result[0].first);
             Assert::AreEqual(0, result[0].second);
         }
 
-        // 15. "Строка, содержащая перевод строки"
+        // 15. "РЎС‚СЂРѕРєР°, СЃРѕРґРµСЂР¶Р°С‰Р°СЏ РїРµСЂРµРІРѕРґ СЃС‚СЂРѕРєРё"
         TEST_METHOD(TestTokenize_Newline)
         {
             string input = "Hello\nworld";
@@ -282,7 +282,7 @@ namespace My60Ignatovtest
             }
         }
 
-        // 16. "Строка с переводом строки и пробелами"
+        // 16. "РЎС‚СЂРѕРєР° СЃ РїРµСЂРµРІРѕРґРѕРј СЃС‚СЂРѕРєРё Рё РїСЂРѕР±РµР»Р°РјРё"
         TEST_METHOD(TestTokenize_NewlineAndSpaces)
         {
             string input = "  Hello\n world ";
@@ -296,7 +296,7 @@ namespace My60Ignatovtest
             }
         }
 
-        // 17. "Строка с переводом строки, пробелами и табуляцией"
+        // 17. "РЎС‚СЂРѕРєР° СЃ РїРµСЂРµРІРѕРґРѕРј СЃС‚СЂРѕРєРё, РїСЂРѕР±РµР»Р°РјРё Рё С‚Р°Р±СѓР»СЏС†РёРµР№"
         TEST_METHOD(TestTokenize_NewlineSpacesTabs)
         {
             string input = "Hello\n\tworld ";
@@ -315,7 +315,7 @@ namespace My60Ignatovtest
     {
     public:
 
-        // 1. "Выражение из одного операнда"
+        // 1. "Р’С‹СЂР°Р¶РµРЅРёРµ РёР· РѕРґРЅРѕРіРѕ РѕРїРµСЂР°РЅРґР°"
         TEST_METHOD(BuildTree_SingleOperand)
         {
             vector<pair<string, int>> tokens = { {"1",0} };
@@ -330,7 +330,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 2. "Одиночная унарная операция"
+        // 2. "РћРґРёРЅРѕС‡РЅР°СЏ СѓРЅР°СЂРЅР°СЏ РѕРїРµСЂР°С†РёСЏ"
         TEST_METHOD(BuildTree_UnaryOperation)
         {
             vector<pair<string, int>> tokens = { {"1",0},{"!",2} };
@@ -345,7 +345,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 3. "Одиночная бинарная операция"
+        // 3. "РћРґРёРЅРѕС‡РЅР°СЏ Р±РёРЅР°СЂРЅР°СЏ РѕРїРµСЂР°С†РёСЏ"
         TEST_METHOD(BuildTree_BinaryOperation)
         {
             vector<pair<string, int>> tokens = { {"1",0},{"0",2},{"^",4} };
@@ -360,7 +360,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 4. "Несколько операций"
+        // 4. "РќРµСЃРєРѕР»СЊРєРѕ РѕРїРµСЂР°С†РёР№"
         TEST_METHOD(BuildTree_MultipleOperations)
         {
             vector<pair<string, int>> tokens =
@@ -388,7 +388,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 5. "Выражение из 101 операции"
+        // 5. "Р’С‹СЂР°Р¶РµРЅРёРµ РёР· 101 РѕРїРµСЂР°С†РёРё"
         TEST_METHOD(BuildTree_TooManyOperations)
         {
             vector<pair<string, int>> tokens;
@@ -416,7 +416,7 @@ namespace My60Ignatovtest
 
         }
 
-        // 6. "Отсутствует операция"
+        // 6. "РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РѕРїРµСЂР°С†РёСЏ"
         TEST_METHOD(BuildTree_MissingOperation)
         {
             vector<pair<string, int>> tokens =
@@ -439,7 +439,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 7. "Не хватает одного операнда"
+        // 7. "РќРµ С…РІР°С‚Р°РµС‚ РѕРґРЅРѕРіРѕ РѕРїРµСЂР°РЅРґР°"
         TEST_METHOD(BuildTree_MissingOperandBinary)
         {
             vector<pair<string, int>> tokens =
@@ -464,7 +464,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 8. "Не хватает обоих операндов"
+        // 8. "РќРµ С…РІР°С‚Р°РµС‚ РѕР±РѕРёС… РѕРїРµСЂР°РЅРґРѕРІ"
         TEST_METHOD(BuildTree_NoOperands)
         {
             vector<pair<string, int>> tokens = { {"v",0} };
@@ -478,7 +478,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 9. "Унарная операция без операнда"
+        // 9. "РЈРЅР°СЂРЅР°СЏ РѕРїРµСЂР°С†РёСЏ Р±РµР· РѕРїРµСЂР°РЅРґР°"
         TEST_METHOD(BuildTree_NotWithoutOperand)
         {
             vector<pair<string, int>> tokens =
@@ -495,7 +495,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 10. "Некорректный символ"
+        // 10. "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ СЃРёРјРІРѕР»"
         TEST_METHOD(BuildTree_InvalidSymbol)
         {
             vector<pair<string, int>> tokens =
@@ -514,7 +514,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 11. "Множество ошибок"
+        // 11. "РњРЅРѕР¶РµСЃС‚РІРѕ РѕС€РёР±РѕРє"
         TEST_METHOD(BuildTree_MultipleErrors)
         {
             vector<pair<string, int>> tokens =
@@ -545,7 +545,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 12. "Пустой ввод"
+        // 12. "РџСѓСЃС‚РѕР№ РІРІРѕРґ"
         TEST_METHOD(BuildTree_EmptyInput)
         {
             vector<pair<string, int>> tokens;
@@ -556,7 +556,7 @@ namespace My60Ignatovtest
             Assert::IsNull(result);
         }
 
-        // 13. "Только операции"
+        // 13. "РўРѕР»СЊРєРѕ РѕРїРµСЂР°С†РёРё"
         TEST_METHOD(BuildTree_OnlyOperators)
         {
             vector<pair<string, int>> tokens = { {"!", 0},{"!", 2},{"^", 4}, {"v", 6}, {"!", 8}, {"->", 10} };
@@ -576,7 +576,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 14. "Только операнды"
+        // 14. "РўРѕР»СЊРєРѕ РѕРїРµСЂР°РЅРґС‹"
         TEST_METHOD(BuildTree_OnlyOperands)
         {
             vector<pair<string, int>> tokens = { {"1",0}, {"0",2}, {"-1",4}, {"1",7},{"0",9} };
@@ -596,7 +596,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 15. "Ровно 100 операций"
+        // 15. "Р РѕРІРЅРѕ 100 РѕРїРµСЂР°С†РёР№"
         TEST_METHOD(BuildTree_Exactly100Operations)
         {
             vector<pair<string, int>> tokens;
@@ -656,7 +656,7 @@ namespace My60Ignatovtest
     {
     public:
 
-        // 1. "Выражение из одного операнда"
+        // 1. "Р’С‹СЂР°Р¶РµРЅРёРµ РёР· РѕРґРЅРѕРіРѕ РѕРїРµСЂР°РЅРґР°"
         TEST_METHOD(Parse_SingleOperand)
         {
             vector<error> errors;
@@ -671,7 +671,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 2. "Одиночная унарная операция"
+        // 2. "РћРґРёРЅРѕС‡РЅР°СЏ СѓРЅР°СЂРЅР°СЏ РѕРїРµСЂР°С†РёСЏ"
         TEST_METHOD(Parse_UnaryOperation)
         {
             vector<error> errors;
@@ -686,7 +686,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 3. "Одиночная бинарная операция"
+        // 3. "РћРґРёРЅРѕС‡РЅР°СЏ Р±РёРЅР°СЂРЅР°СЏ РѕРїРµСЂР°С†РёСЏ"
         TEST_METHOD(Parse_BinaryOperation)
         {
             vector<error> errors;
@@ -701,7 +701,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 4. "Несколько операций"
+        // 4. "РќРµСЃРєРѕР»СЊРєРѕ РѕРїРµСЂР°С†РёР№"
         TEST_METHOD(Parse_MultipleOperations)
         {
             vector<error> errors;
@@ -717,7 +717,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 5. "Выражение из 101 операции"
+        // 5. "Р’С‹СЂР°Р¶РµРЅРёРµ РёР· 101 РѕРїРµСЂР°С†РёРё"
         TEST_METHOD(Parse_TooManyOperations)
         {
             string input = "1 1 ^";
@@ -735,7 +735,7 @@ namespace My60Ignatovtest
 
         }
 
-        // 6. "Отсутствует операция"
+        // 6. "РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РѕРїРµСЂР°С†РёСЏ"
         TEST_METHOD(Parse_MissingOperation)
         {
             vector<error> errors;
@@ -746,7 +746,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 7. "Недостаточно одного операнда"
+        // 7. "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РѕРґРЅРѕРіРѕ РѕРїРµСЂР°РЅРґР°"
         TEST_METHOD(Parse_MissingOperandBinary)
         {
             vector<error> errors;
@@ -757,7 +757,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 8. "Недостаточно обоих операндов"
+        // 8. "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РѕР±РѕРёС… РѕРїРµСЂР°РЅРґРѕРІ"
         TEST_METHOD(Parse_NoOperands)
         {
             vector<error> errors;
@@ -768,7 +768,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 9. "Унарная операция без операнда"
+        // 9. "РЈРЅР°СЂРЅР°СЏ РѕРїРµСЂР°С†РёСЏ Р±РµР· РѕРїРµСЂР°РЅРґР°"
         TEST_METHOD(Parse_NotWithoutOperand)
         {
             vector<error> errors;
@@ -779,7 +779,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 10. "Некорректная последовательность символов"
+        // 10. "РќРµРєРѕСЂСЂРµРєС‚РЅР°СЏ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ СЃРёРјРІРѕР»РѕРІ"
         TEST_METHOD(Parse_InvalidSymbol)
         {
             vector<error> errors;
@@ -790,7 +790,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 11. "Множество ошибок"
+        // 11. "РњРЅРѕР¶РµСЃС‚РІРѕ РѕС€РёР±РѕРє"
         TEST_METHOD(Parse_MultipleErrors)
         {
             vector<error> errors;
@@ -806,7 +806,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 12. "Пустая строка"
+        // 12. "РџСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°"
         TEST_METHOD(Parse_Empty)
         {
             vector<error> errors;
@@ -818,7 +818,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 13. "Только операции"
+        // 13. "РўРѕР»СЊРєРѕ РѕРїРµСЂР°С†РёРё"
         TEST_METHOD(Parse_OnlyOperators)
         {
             vector<error> errors;
@@ -835,7 +835,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 14. "Только операнды"
+        // 14. "РўРѕР»СЊРєРѕ РѕРїРµСЂР°РЅРґС‹"
         TEST_METHOD(Parse_OnlyOperands)
         {
             vector<error> errors;
@@ -852,7 +852,7 @@ namespace My60Ignatovtest
             assertErrorsEqual(errors, expected);
         }
 
-        // 15. "Ровно 100 операций"
+        // 15. "Р РѕРІРЅРѕ 100 РѕРїРµСЂР°С†РёР№"
         TEST_METHOD(Parse_Exactly100Operations)
         {
             string input = "1 1 ^";
@@ -897,7 +897,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 16. "Лидирующие пробелы"
+        // 16. "Р›РёРґРёСЂСѓСЋС‰РёРµ РїСЂРѕР±РµР»С‹"
         TEST_METHOD(Parse_LeadingSpaces)
         {
             vector<error> errors;
@@ -912,7 +912,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 17. "Замыкающие пробелы"
+        // 17. "Р—Р°РјС‹РєР°СЋС‰РёРµ РїСЂРѕР±РµР»С‹"
         TEST_METHOD(Parse_TrailingSpaces)
         {
             vector<error> errors;
@@ -927,7 +927,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 18. "Многочисленные пробелы"
+        // 18. "РњРЅРѕРіРѕС‡РёСЃР»РµРЅРЅС‹Рµ РїСЂРѕР±РµР»С‹"
         TEST_METHOD(Parse_ManySpaces)
         {
             vector<error> errors;
@@ -942,7 +942,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 19. "Табуляция"
+        // 19. "РўР°Р±СѓР»СЏС†РёСЏ"
         TEST_METHOD(Parse_Tab)
         {
             vector<error> errors;
@@ -957,7 +957,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 20. "Табуляция и пробелы"
+        // 20. "РўР°Р±СѓР»СЏС†РёСЏ Рё РїСЂРѕР±РµР»С‹"
         TEST_METHOD(Parse_TabSpaces)
         {
             vector<error> errors;
@@ -972,7 +972,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 21. "Только пробелы"
+        // 21. "РўРѕР»СЊРєРѕ РїСЂРѕР±РµР»С‹"
         TEST_METHOD(Parse_Spaces)
         {
             vector<error> errors;
@@ -984,7 +984,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 22. "Переводы строк"
+        // 22. "РџРµСЂРµРІРѕРґС‹ СЃС‚СЂРѕРє"
         TEST_METHOD(Parse_LineFeed)
         {
             vector<error> errors;
@@ -999,7 +999,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 23. "Переводы строк и пробелы"
+        // 23. "РџРµСЂРµРІРѕРґС‹ СЃС‚СЂРѕРє Рё РїСЂРѕР±РµР»С‹"
         TEST_METHOD(Parse_LineFeedSpaces)
         {
             vector<error> errors;
@@ -1014,7 +1014,7 @@ namespace My60Ignatovtest
             delete result;
         }
 
-        // 24. "Переводы строк, и пробелы, и табуляция"
+        // 24. "РџРµСЂРµРІРѕРґС‹ СЃС‚СЂРѕРє, Рё РїСЂРѕР±РµР»С‹, Рё С‚Р°Р±СѓР»СЏС†РёСЏ"
         TEST_METHOD(Parse_LineFeedSpacesTab)
         {
             vector<error> errors;
@@ -1034,7 +1034,7 @@ namespace My60Ignatovtest
     {
     public:
 
-        // 1. "Одиночная операция NOT (1)"
+        // 1. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ NOT (1)"
         TEST_METHOD(Calc_Not_1)
         {
             auto node = makeOp(NOT, nullptr, makeValue(1, 0), 2);
@@ -1043,7 +1043,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 2. "Одиночная операция NOT (-1)"
+        // 2. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ NOT (-1)"
         TEST_METHOD(Calc_Not_Minus1)
         {
             auto node = makeOp(NOT, nullptr, makeValue(-1, 0), 2);
@@ -1052,7 +1052,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 3. "Одиночная операция NOT (0)"
+        // 3. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ NOT (0)"
         TEST_METHOD(Calc_Not_0)
         {
             auto node = makeOp(NOT, nullptr, makeValue(0, 0), 2);
@@ -1061,7 +1061,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 4. "Одиночная операция AND (1, 0)"
+        // 4. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ AND (1, 0)"
         TEST_METHOD(Calc_And_1_0)
         {
             auto node = makeOp(AND, makeValue(1, 0), makeValue(0, 2), 4);
@@ -1070,7 +1070,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 5. "Одиночная операция AND (1, -1)"
+        // 5. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ AND (1, -1)"
         TEST_METHOD(Calc_And_1_Minus1)
         {
             auto node = makeOp(AND, makeValue(1, 0), makeValue(-1, 2), 4);
@@ -1079,7 +1079,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 6. "Одиночная операция AND (1, 1)"
+        // 6. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ AND (1, 1)"
         TEST_METHOD(Calc_And_1_1)
         {
             auto node = makeOp(AND, makeValue(1, 0), makeValue(1, 2), 4);
@@ -1088,7 +1088,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 7. "Одиночная операция AND (-1, 0)"
+        // 7. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ AND (-1, 0)"
         TEST_METHOD(Calc_And_Minus1_0)
         {
             auto node = makeOp(AND, makeValue(-1, 0), makeValue(0, 2), 4);
@@ -1097,7 +1097,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 8. "Одиночная операция AND (-1, 1)"
+        // 8. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ AND (-1, 1)"
         TEST_METHOD(Calc_And_Minus1_1)
         {
             auto node = makeOp(AND, makeValue(-1, 0), makeValue(1, 2), 4);
@@ -1106,7 +1106,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 9. "Одиночная операция AND (-1, -1)"
+        // 9. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ AND (-1, -1)"
         TEST_METHOD(Calc_And_Minus1_Minus1)
         {
             auto node = makeOp(AND, makeValue(-1, 0), makeValue(-1, 2), 4);
@@ -1115,7 +1115,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 10. "Одиночная операция AND (0, 0)"
+        // 10. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ AND (0, 0)"
         TEST_METHOD(Calc_And_0_0)
         {
             auto node = makeOp(AND, makeValue(0, 0), makeValue(0, 2), 4);
@@ -1124,7 +1124,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 11. "Одиночная операция AND (0, 1)"
+        // 11. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ AND (0, 1)"
         TEST_METHOD(Calc_And_0_1)
         {
             auto node = makeOp(AND, makeValue(0, 0), makeValue(1, 2), 4);
@@ -1133,7 +1133,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 12. "Одиночная операция AND (0, -1)"
+        // 12. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ AND (0, -1)"
         TEST_METHOD(Calc_And_0_Minus1)
         {
             auto node = makeOp(AND, makeValue(0, 0), makeValue(-1, 2), 4);
@@ -1142,7 +1142,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 13. "Одиночная операция OR (-1, 0)"
+        // 13. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ OR (-1, 0)"
         TEST_METHOD(Calc_Or_Minus1_0)
         {
             auto node = makeOp(OR, makeValue(-1, 0), makeValue(0, 2), 4);
@@ -1151,7 +1151,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 14. "Одиночная операция OR (-1, 1)"
+        // 14. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ OR (-1, 1)"
         TEST_METHOD(Calc_Or_Minus1_1)
         {
             auto node = makeOp(OR, makeValue(-1, 0), makeValue(1, 2), 4);
@@ -1160,7 +1160,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 15. "Одиночная операция OR (-1, -1)"
+        // 15. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ OR (-1, -1)"
         TEST_METHOD(Calc_Or_Minus1_Minus1)
         {
             auto node = makeOp(OR, makeValue(-1, 0), makeValue(-1, 2), 4);
@@ -1169,7 +1169,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 16. "Одиночная операция OR (1, 0)"
+        // 16. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ OR (1, 0)"
         TEST_METHOD(Calc_Or_1_0)
         {
             auto node = makeOp(OR, makeValue(1, 0), makeValue(0, 2), 4);
@@ -1178,7 +1178,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 17. "Одиночная операция OR (1, 1)"
+        // 17. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ OR (1, 1)"
         TEST_METHOD(Calc_Or_1_1)
         {
             auto node = makeOp(OR, makeValue(1, 0), makeValue(1, 2), 4);
@@ -1187,7 +1187,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 18. "Одиночная операция OR (1, -1)"
+        // 18. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ OR (1, -1)"
         TEST_METHOD(Calc_Or_1_Minus1)
         {
             auto node = makeOp(OR, makeValue(1, 0), makeValue(-1, 2), 4);
@@ -1196,7 +1196,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 19. "Одиночная операция OR (0, 0)"
+        // 19. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ OR (0, 0)"
         TEST_METHOD(Calc_Or_0_0)
         {
             auto node = makeOp(OR, makeValue(0, 0), makeValue(0, 2), 4);
@@ -1205,7 +1205,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 20. "Одиночная операция OR (0, 1)"
+        // 20. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ OR (0, 1)"
         TEST_METHOD(Calc_Or_0_1)
         {
             auto node = makeOp(OR, makeValue(0, 0), makeValue(1, 2), 4);
@@ -1214,7 +1214,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 21. "Одиночная операция OR (0, -1)"
+        // 21. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ OR (0, -1)"
         TEST_METHOD(Calc_Or_0_Minus1)
         {
             auto node = makeOp(OR, makeValue(0, 0), makeValue(-1, 2), 4);
@@ -1223,7 +1223,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 22. "Одиночная операция IMPLICATION (-1, 1)"
+        // 22. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ IMPLICATION (-1, 1)"
         TEST_METHOD(Calc_Impl_Minus1_1)
         {
             auto node = makeOp(IMPLICATION, makeValue(-1, 0), makeValue(1, 2), 4);
@@ -1232,7 +1232,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 23. "Одиночная операция IMPLICATION (-1, 0)"
+        // 23. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ IMPLICATION (-1, 0)"
         TEST_METHOD(Calc_Impl_Minus1_0)
         {
             auto node = makeOp(IMPLICATION, makeValue(-1, 0), makeValue(0, 2), 4);
@@ -1241,7 +1241,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 24. "Одиночная операция IMPLICATION (-1, -1)"
+        // 24. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ IMPLICATION (-1, -1)"
         TEST_METHOD(Calc_Impl_Minus1_Minus1)
         {
             auto node = makeOp(IMPLICATION, makeValue(-1, 0), makeValue(-1, 2), 4);
@@ -1250,7 +1250,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 25. "Одиночная операция IMPLICATION (1, 1)"
+        // 25. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ IMPLICATION (1, 1)"
         TEST_METHOD(Calc_Impl_1_1)
         {
             auto node = makeOp(IMPLICATION, makeValue(1, 0), makeValue(1, 2), 4);
@@ -1259,7 +1259,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 26. "Одиночная операция IMPLICATION (1, 0)"
+        // 26. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ IMPLICATION (1, 0)"
         TEST_METHOD(Calc_Impl_1_0)
         {
             auto node = makeOp(IMPLICATION, makeValue(1, 0), makeValue(0, 2), 4);
@@ -1268,7 +1268,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 27. "Одиночная операция IMPLICATION (1, -1)"
+        // 27. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ IMPLICATION (1, -1)"
         TEST_METHOD(Calc_Impl_1_Minus1)
         {
             auto node = makeOp(IMPLICATION, makeValue(1, 0), makeValue(-1, 2), 4);
@@ -1277,7 +1277,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 28. "Одиночная операция IMPLICATION (0, 1)"
+        // 28. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ IMPLICATION (0, 1)"
         TEST_METHOD(Calc_Impl_0_1)
         {
             auto node = makeOp(IMPLICATION, makeValue(0, 0), makeValue(1, 2), 4);
@@ -1286,7 +1286,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 29. "Одиночная операция IMPLICATION (0, -1)"
+        // 29. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ IMPLICATION (0, -1)"
         TEST_METHOD(Calc_Impl_0_Minus1)
         {
             auto node = makeOp(IMPLICATION, makeValue(0, 0), makeValue(-1, 2), 4);
@@ -1295,7 +1295,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 30. "Одиночная операция IMPLICATION (0, 0)"
+        // 30. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ IMPLICATION (0, 0)"
         TEST_METHOD(Calc_Impl_0_0)
         {
             auto node = makeOp(IMPLICATION, makeValue(0, 0), makeValue(0, 2), 4);
@@ -1304,7 +1304,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 31. "Одиночная операция EQUIVALENCE (-1, -1)"
+        // 31. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ EQUIVALENCE (-1, -1)"
         TEST_METHOD(Calc_Equiv_Minus1_Minus1)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(-1, 0), makeValue(-1, 2), 4);
@@ -1313,7 +1313,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 32. "Одиночная операция EQUIVALENCE (-1, 1)"
+        // 32. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ EQUIVALENCE (-1, 1)"
         TEST_METHOD(Calc_Equiv_Minus1_1)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(-1, 0), makeValue(1, 2), 4);
@@ -1322,7 +1322,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 33. "Одиночная операция EQUIVALENCE (-1, 0)"
+        // 33. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ EQUIVALENCE (-1, 0)"
         TEST_METHOD(Calc_Equiv_Minus1_0)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(-1, 0), makeValue(0, 2), 4);
@@ -1331,7 +1331,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 34. "Одиночная операция EQUIVALENCE (1, -1)"
+        // 34. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ EQUIVALENCE (1, -1)"
         TEST_METHOD(Calc_Equiv_1_Minus1)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(1, 0), makeValue(-1, 2), 4);
@@ -1340,7 +1340,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 35. "Одиночная операция EQUIVALENCE (1, 1)"
+        // 35. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ EQUIVALENCE (1, 1)"
         TEST_METHOD(Calc_Equiv_1_1)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(1, 0), makeValue(1, 2), 4);
@@ -1349,7 +1349,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 36. "Одиночная операция EQUIVALENCE (1, 0)"
+        // 36. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ EQUIVALENCE (1, 0)"
         TEST_METHOD(Calc_Equiv_1_0)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(1, 0), makeValue(0, 2), 4);
@@ -1358,7 +1358,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 37. "Одиночная операция EQUIVALENCE (0, -1)"
+        // 37. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ EQUIVALENCE (0, -1)"
         TEST_METHOD(Calc_Equiv_0_Minus1)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(0, 0), makeValue(-1, 2), 4);
@@ -1367,7 +1367,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 38. "Одиночная операция EQUIVALENCE (0, 1)"
+        // 38. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ EQUIVALENCE (0, 1)"
         TEST_METHOD(Calc_Equiv_0_1)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(0, 0), makeValue(1, 2), 4);
@@ -1376,7 +1376,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 39. "Одиночная операция EQUIVALENCE (0, 0)"
+        // 39. "РћРґРёРЅРѕС‡РЅР°СЏ РѕРїРµСЂР°С†РёСЏ EQUIVALENCE (0, 0)"
         TEST_METHOD(Calc_Equiv_0_0)
         {
             auto node = makeOp(EQUIVALENCE, makeValue(0, 0), makeValue(0, 2), 4);
@@ -1385,7 +1385,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 40. "Дерево состоит из одного операнда (1)"
+        // 40. "Р”РµСЂРµРІРѕ СЃРѕСЃС‚РѕРёС‚ РёР· РѕРґРЅРѕРіРѕ РѕРїРµСЂР°РЅРґР° (1)"
         TEST_METHOD(Calc_SingleNode_1)
         {
             auto node = makeValue(1, 0);
@@ -1394,7 +1394,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 41. "Дерево состоит из одного операнда (0)"
+        // 41. "Р”РµСЂРµРІРѕ СЃРѕСЃС‚РѕРёС‚ РёР· РѕРґРЅРѕРіРѕ РѕРїРµСЂР°РЅРґР° (0)"
         TEST_METHOD(Calc_SingleNode_0)
         {
             auto node = makeValue(0, 0);
@@ -1403,7 +1403,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 42. "Дерево состоит из одного операнда (-1)"
+        // 42. "Р”РµСЂРµРІРѕ СЃРѕСЃС‚РѕРёС‚ РёР· РѕРґРЅРѕРіРѕ РѕРїРµСЂР°РЅРґР° (-1)"
         TEST_METHOD(Calc_SingleNode_Minus1)
         {
             auto node = makeValue(-1, 0);
@@ -1412,7 +1412,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 43. "Комплексный тест 1"
+        // 43. "РљРѕРјРїР»РµРєСЃРЅС‹Р№ С‚РµСЃС‚ 1"
         TEST_METHOD(Calc_Complex_1)
         {
             auto node = makeOp(EQUIVALENCE, makeOp(AND, makeValue(1, 0), makeValue(0, 2), 4), makeOp(IMPLICATION,
@@ -1423,7 +1423,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 44. "Комплексный тест 2"
+        // 44. "РљРѕРјРїР»РµРєСЃРЅС‹Р№ С‚РµСЃС‚ 2"
         TEST_METHOD(Calc_Complex_2)
         {
             auto node = makeOp(AND,
@@ -1448,7 +1448,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 45. "Комплексный тест 3"
+        // 45. "РљРѕРјРїР»РµРєСЃРЅС‹Р№ С‚РµСЃС‚ 3"
         TEST_METHOD(Calc_Complex_3)
         {
             auto node = makeOp(IMPLICATION,
@@ -1473,7 +1473,7 @@ namespace My60Ignatovtest
             delete node;
         }
 
-        // 46. "Вместо дерева передан nullptr"
+        // 46. "Р’РјРµСЃС‚Рѕ РґРµСЂРµРІР° РїРµСЂРµРґР°РЅ nullptr"
         TEST_METHOD(Calc_Nullptr)
         {
             exprNode* node = nullptr;

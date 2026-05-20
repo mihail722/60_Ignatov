@@ -1,5 +1,5 @@
 ﻿using namespace std;
-
+#pragma warning(disable : 4996)
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -176,36 +176,22 @@ exprNodeType getOperationType(const string& token)
     return result; // Вернуть результат
 }
 
-vector<pair<string, int>> tokenize(const string& line)
-{
-    vector<pair<string, int>> tokens; // Создать вектор токенов
-    size_t pos = 0;
-
-    // Пока в строке есть не пробельные символы 
-    while ((line.find_first_not_of(" \t\n", pos)) != string::npos)
-    {
-        pos = line.find_first_not_of(" \t\n", pos); // Найти позицию первого, не пробельного символа(find_first_not_of)
-
-        size_t end = line.find_first_of(" \t\n", pos); // Найти позицию ближайшего пробельного символа(find_first_of)
-
-        string token = line.substr(pos, end - pos); // Зафиксировать найденный токен
-        tokens.push_back({ token, (int)pos }); // Записать в список найденный токен
-
-        pos = end; // Перейти к поиску следующего токена
-    } 
-    return tokens; // Вернуть вектор токенов
-}
-
-exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& errors)
+exprNode* buildTree(const string& line, vector<error>& errors)
 {
     stack<exprNode*> st = {}; // Cчитать, что стек пуст
     int opCount = 0; // Считать, что счётчик количества операций принимает значение 0
 
+    string buffer = line;
+
+    char* begin = &buffer[0];
+    char* tok = strtok(begin, " \t\n");
+
     // Для каждого токена
-    for (auto& t : tokens) 
+    while (tok)
     {
-        string token = t.first;
-        int pos = t.second;
+        int pos = static_cast<int>(tok - begin);
+        string token(tok);
+
         // Если токен является операндом
         if (isOperand(token))
         {
@@ -216,7 +202,7 @@ exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& erro
         {
             opCount++; // Инкрементировать счётчик операций 
             exprNodeType type = getOperationType(token); // Определить тип операции
-            
+
             // Если тип операции - NOT 
             if (type == NOT)
             {
@@ -239,7 +225,7 @@ exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& erro
             else
             {
                 exprNode* node = new exprNode(type, nullptr, nullptr, pos); // Создать узел операции
-                
+
                 // Если в стеке больше 1 элемента
                 if (st.size() > 1)
                 {   // Извлечь 2 элемента из стека и записать их в узел 
@@ -252,7 +238,7 @@ exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& erro
                     if (st.size() == 1)
                     {
                         st.pop(); // Извлечь элемент из стека
-                    } 
+                    }
                     errors.push_back({ MISSING_OPERAND, pos, 0, token }); // Добавить в вектор ошибок, ошибку MISSING_OPERAND
                 }
                 st.push(node); // Добавить в стек полученный узел
@@ -264,10 +250,12 @@ exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& erro
             errors.push_back({ INVALID_SYMBOL, pos, 0, token }); // Добавить в вектор ошибок, ошибку INVALID_SYMBOL
             st.push(new exprNode(0, pos)); // Создать фиктивный узел и добавить его в стек
         }
+
+        tok = strtok(nullptr, " \t\n");
     }
     // Если найдено больше 100 операций
     if (opCount > 100)
-    { 
+    {
         errors.push_back({ TOO_MANY_OPERATION, 0, 0, "" }); // Добавить в вектор ошибок, ошибку TOO_MANY_OPERATION 
     }
     // Пока в стеке больше 1 элемента
@@ -290,9 +278,7 @@ exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& erro
 
 exprNode* parseExpression(const string& line, vector<error>& errors)
 {
-    auto tokens = tokenize(line); // Разбить строку на токены(подстроки)
-
-    exprNode* root = buildTree(tokens, errors); // Построить дерево выполнения выражения 
+    exprNode* root = buildTree(line, errors); // Построить дерево выполнения выражения 
      
     return root; // Вернуть корень дерева выражения
 }
@@ -405,7 +391,7 @@ int main(int argc, char* argv[])
     vector<error> errors;
 
     exprNode* root = parseExpression(line, errors); // Распарсить строку из входного файла
-    
+
     // Если в результате парсинга произошли ошибки
     if (!errors.empty())
     {   // Выдать сообщение о каждой произошедшей ошибке
@@ -430,7 +416,7 @@ int main(int argc, char* argv[])
         }
         delete root; // Удалить корень дерева
         return 1; // Завершить работу программы
-    } 
+    }
     ofstream output(argv[2]); // Считать выходной файл
 
     // Если выходной файл невозможно создать
@@ -439,7 +425,7 @@ int main(int argc, char* argv[])
         cout << "The specified output file is invalid. The specified location may not exist or you may not have write permissions.\n"; // Выдать сообщение об ошибке 
         return 1; // Завершить работу программы
     }
-
+ 
     exprNode::calculate(root); // Рассчитать дерево 
 
     writeGraph(root, output); // Сгенерировать описание дерева операций в выходной файл
