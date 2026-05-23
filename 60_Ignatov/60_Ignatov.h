@@ -249,3 +249,27 @@ void writeGraph(exprNode* root, ofstream& out);
  * @return int Код завершения программы: 0 при успешном завершении, иначе 1
  */
 int main(int argc, char* argv[]);
+
+/**
+ * @brief Считывает и проверяет входной файл.
+ * @param filename Путь к входному файлу.
+ * @param line Ссылка на строку, в которую будет сохранено содержимое файла.
+ * @return true Если файл успешно считан и прошёл проверку.
+ * @return false Если при чтении или проверке файла возникла ошибка.
+ */
+bool readInputFile(const char* filename, string& line);
+
+/**
+ * @brief Вычисляет дерево выражения и сохраняет его графовое представление в файл.
+ * @param filename Путь к выходному файлу.
+ * @param root Указатель на корень дерева выражения.
+ * @return true Если граф успешно записан в файл.
+ * @return false Если выходной файл не удалось создать или открыть.
+ */
+bool saveGraph(const char* filename, exprNode* root);
+
+/**
+ * @brief Выводит сообщения обо всех обнаруженных ошибках.
+ * @param errors Вектор обнаруженных ошибок.
+ */
+void printErrors(const vector<error>& errors);
