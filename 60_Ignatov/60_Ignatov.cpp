@@ -176,22 +176,16 @@ exprNodeType getOperationType(const string& token)
     return result; // Вернуть результат
 }
 
-exprNode* buildTree(const string& line, vector<error>& errors)
+exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& errors)
 {
     stack<exprNode*> st = {}; // Cчитать, что стек пуст
     int opCount = 0; // Считать, что счётчик количества операций принимает значение 0
 
-    string buffer = line;
-
-    char* begin = &buffer[0];
-    char* tok = strtok(begin, " \t\n");
-
     // Для каждого токена
-    while (tok)
+    for (auto& t : tokens)
     {
-        int pos = static_cast<int>(tok - begin);
-        string token(tok);
-
+        string token = t.first;
+        int pos = t.second;
         // Если токен является операндом
         if (isOperand(token))
         {
@@ -201,48 +195,7 @@ exprNode* buildTree(const string& line, vector<error>& errors)
         else if (isOperation(token))
         {
             opCount++; // Инкрементировать счётчик операций 
-            exprNodeType type = getOperationType(token); // Определить тип операции
-
-            // Если тип операции - NOT 
-            if (type == NOT)
-            {
-                exprNode* node = new exprNode(type, nullptr, nullptr, pos); // Создать узел операции
-
-                // Если стек не пустой
-                if (!st.empty())
-                {   // Извлечь 1 элемент из стека и записать его в узел 
-                    node->setRight(st.top());
-                    st.pop();
-                }
-                // Иначе
-                else
-                {
-                    errors.push_back({ MISSING_OPERAND, pos, 0, token }); // Добавить в вектор ошибок, ошибку MISSING_OPERAND
-                }
-                st.push(node); // Добавить в стек полученный узел
-            }
-            // Иначе
-            else
-            {
-                exprNode* node = new exprNode(type, nullptr, nullptr, pos); // Создать узел операции
-
-                // Если в стеке больше 1 элемента
-                if (st.size() > 1)
-                {   // Извлечь 2 элемента из стека и записать их в узел 
-                    node->setRight(st.top()); st.pop();
-                    node->setLeft(st.top()); st.pop();
-                }
-                // Иначе
-                else
-                {   // Если в стеке 1 элемент
-                    if (st.size() == 1)
-                    {
-                        st.pop(); // Извлечь элемент из стека
-                    }
-                    errors.push_back({ MISSING_OPERAND, pos, 0, token }); // Добавить в вектор ошибок, ошибку MISSING_OPERAND
-                }
-                st.push(node); // Добавить в стек полученный узел
-            }
+            processOperation(st, token, pos, errors); // 
         }
         // Иначе
         else
@@ -250,8 +203,6 @@ exprNode* buildTree(const string& line, vector<error>& errors)
             errors.push_back({ INVALID_SYMBOL, pos, 0, token }); // Добавить в вектор ошибок, ошибку INVALID_SYMBOL
             st.push(new exprNode(0, pos)); // Создать фиктивный узел и добавить его в стек
         }
-
-        tok = strtok(nullptr, " \t\n");
     }
     // Если найдено больше 100 операций
     if (opCount > 100)
@@ -276,10 +227,91 @@ exprNode* buildTree(const string& line, vector<error>& errors)
     return st.top(); // Вернуть верхний элемент стека (корень дерева)
 }
 
+vector<pair<string, int>> tokenize(const string& line)
+{
+    vector<pair<string, int>> tokens; // Создать вектор токенов
+
+    string buffer = line; // Скопировать строку в буфер
+
+    char* begin = &buffer[0]; 
+
+    char* token = strtok(begin, " \t\n"); // Сформировать первый токен
+    
+    // Пока токены существуют
+    while (token)
+    {
+        int pos = static_cast<int>(token - begin); // Вычислить позицию токена
+
+        tokens.push_back({ token, pos }); // Добавить токен в вектор
+
+        token = strtok(nullptr, " \t\n"); // Получить следующий токен
+    }
+
+    return tokens; // Вернуть вектор токенов
+}
+
+void processOperation(stack<exprNode*>& st, const string& token, int pos, vector<error>& errors)
+{
+    exprNodeType type = getOperationType(token); // Определить тип операции
+
+    // Если тип операции - NOT
+    if (type == NOT)
+    {
+        processUnaryOperation(st, type, pos, token, errors); // Обработать бинарную операцию
+    } 
+    // Иначе
+    else
+    {
+        processBinaryOperation(st, type, pos, token, errors); // Обработать унарную операцию
+    }
+}
+
+void processUnaryOperation(stack<exprNode*>& st, exprNodeType type, int pos, const string& token, vector<error>& errors)
+{
+    exprNode* node = new exprNode(type, nullptr, nullptr, pos); // Создать узел операции
+
+    // Если стек не пустой
+    if (!st.empty())
+    {   // Извлечь 1 элемент из стека и записать его в узел 
+        node->setRight(st.top());
+        st.pop();
+    }
+    // Иначе
+    else
+    {
+        errors.push_back({ MISSING_OPERAND, pos, 0, token }); // Добавить в вектор ошибок, ошибку MISSING_OPERAND
+    }
+    st.push(node); // Добавить в стек полученный узел
+}
+
+void processBinaryOperation(stack<exprNode*>& st, exprNodeType type, int pos, const string& token, vector<error>& errors)
+{
+    exprNode* node = new exprNode(type, nullptr, nullptr, pos); // Создать узел операции
+
+    // Если в стеке больше 1 элемента
+    if (st.size() > 1)
+    {   // Извлечь 2 элемента из стека и записать их в узел 
+        node->setRight(st.top()); st.pop();
+        node->setLeft(st.top()); st.pop();
+    }
+    // Иначе
+    else
+    {   // Если в стеке 1 элемент
+        if (st.size() == 1)
+        {
+            st.pop(); // Извлечь элемент из стека
+        }
+        errors.push_back({ MISSING_OPERAND, pos, 0, token }); // Добавить в вектор ошибок, ошибку MISSING_OPERAND
+    }
+    st.push(node); // Добавить в стек полученный узел
+}
+
 exprNode* parseExpression(const string& line, vector<error>& errors)
 {
-    exprNode* root = buildTree(line, errors); // Построить дерево выполнения выражения 
-     
+    auto tokens = tokenize(line); // Разбить строку на токены(подстроки)
+
+    exprNode* root = buildTree(tokens, errors); // Построить дерево выполнения выражения 
+
     return root; // Вернуть корень дерева выражения
 }
 

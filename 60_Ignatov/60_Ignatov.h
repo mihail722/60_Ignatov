@@ -177,12 +177,48 @@ bool isOperation(const string& token);
 exprNodeType getOperationType(const string& token);
 
 /**
- * @brief Построение дерева троично-логического выражения
- * @param[in] line Входная строка выражения
- * @param[out] errors Вектор для хранения ошибок
- * @return exprNode* Корень дерева выражения или nullptr при ошибке
+ * @brief Построение дерева троично-логического выражения.
+ * @param tokens[in] Вектор токенов.
+ * @param errors[out] Вектор для хранения ошибок.
+ * @return exprNode* Корень дерева выражения или nullptr при ошибке.
  */
-exprNode* buildTree(const string& line, vector<error>& errors);
+exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& errors);
+
+/*
+ * @brief Разбиение строки на токены с сохранением позиций.
+ * @param[in] line Входная строка выражения.
+ * @return vector<pair<string, int>> Список токенов и их позиций.
+ */
+vector<pair<string, int>> tokenize(const string& line);
+
+/**
+ * @brief Обрабатывает унарную операцию.
+ * @param st Стек узлов дерева выражения.
+ * @param type Тип унарной операции.
+ * @param pos Позиция токена операции во входной строке.
+ * @param token Строковое представление операции.
+ * @param errors Вектор для сохранения ошибок парсинга.
+ */
+void processUnaryOperation(stack<exprNode*>& st, exprNodeType type, int pos, const string& token, vector<error>& errors);
+
+/**
+ * @brief Обрабатывает бинарную операцию.
+ * @param st Стек узлов дерева выражения.
+ * @param type Тип бинарной операции.
+ * @param pos Позиция токена операции во входной строке.
+ * @param token Строковое представление операции.
+ * @param errors Вектор для сохранения ошибок парсинга.
+ */
+void processBinaryOperation(stack<exprNode*>& st, exprNodeType type, int pos, const string& token, vector<error>& errors);
+
+/**
+ * @brief Обрабатывает операцию и создаёт соответствующий узел дерева выражения.
+ * @param st Стек узлов дерева выражения.
+ * @param token Строковое представление операции.
+ * @param pos Позиция токена операции во входной строке.
+ * @param errors Вектор для сохранения ошибок парсинга.
+ */
+void processOperation(stack<exprNode*>& st, const string& token, int pos, vector<error>& errors);
 
 /**
  * @brief Парсит троично-логическое выражение
