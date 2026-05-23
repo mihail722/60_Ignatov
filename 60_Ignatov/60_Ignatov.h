@@ -10,6 +10,43 @@
 using namespace std;
 
 /**
+ * @mainpage Calculation of a ternary logical expression.
+ *
+ * @section intro_sec Описание программы
+ *
+ * Данная программа предназначена для:
+ * - вычисления значения троично-логического выражения;
+ * - построения дерева выражения;
+ * - генерации графа дерева операций в формате DOT;
+ *
+ * Программа работает с логикой трёхзначного типа:
+ * - -1 - ложь
+ * - 0 - неопределённость
+ * - 1 - истина
+ *
+ * Поддерживаемые операции: NOT (!), AND (^), OR (v), IMPLICATION (->), EQUIVALENCE (<->)
+ *
+ * @section input_sec Входные данные
+ *
+ * Программа принимает:
+ * - входной файл с выражением;
+ * - выходной файл для сохранения дерева.
+ *
+ * Формат запуска:
+ *
+ * @code
+ * 60_Ignatov.exe input.txt output.txt
+ * @endcode
+ *
+ * @section output_sec Выходные данные
+ *
+ * Программа выводит:
+ * - ошибки при наличии;
+ * - результат выражения в виде дерева;
+ *
+ */
+
+/**
  * @enum exprNodeType
  * @brief Перечисление типов узлов выражения
  */
@@ -178,13 +215,13 @@ exprNodeType getOperationType(const string& token);
 
 /**
  * @brief Построение дерева троично-логического выражения.
- * @param tokens[in] Вектор токенов.
- * @param errors[out] Вектор для хранения ошибок.
+ * @param[in] tokens Вектор токенов.
+ * @param[out] errors Вектор для хранения ошибок.
  * @return exprNode* Корень дерева выражения или nullptr при ошибке.
  */
 exprNode* buildTree(const vector<pair<string, int>>& tokens, vector<error>& errors);
 
-/*
+/**
  * @brief Разбиение строки на токены с сохранением позиций.
  * @param[in] line Входная строка выражения.
  * @return vector<pair<string, int>> Список токенов и их позиций.
@@ -193,30 +230,30 @@ vector<pair<string, int>> tokenize(const string& line);
 
 /**
  * @brief Обрабатывает унарную операцию.
- * @param st Стек узлов дерева выражения.
- * @param type Тип унарной операции.
- * @param pos Позиция токена операции во входной строке.
- * @param token Строковое представление операции.
- * @param errors Вектор для сохранения ошибок парсинга.
+ * @param[in,out] st Стек узлов дерева выражения.
+ * @param[in] type Тип унарной операции.
+ * @param[in] pos Позиция токена операции во входной строке.
+ * @param[in] token Строковое представление операции.
+ * @param[out] errors Вектор для сохранения ошибок парсинга.
  */
 void processUnaryOperation(stack<exprNode*>& st, exprNodeType type, int pos, const string& token, vector<error>& errors);
 
 /**
  * @brief Обрабатывает бинарную операцию.
- * @param st Стек узлов дерева выражения.
- * @param type Тип бинарной операции.
- * @param pos Позиция токена операции во входной строке.
- * @param token Строковое представление операции.
- * @param errors Вектор для сохранения ошибок парсинга.
+ * @param[in,out] st Стек узлов дерева выражения.
+ * @param[in] type[in] Тип бинарной операции.
+ * @param[in] pos[in] Позиция токена операции во входной строке.
+ * @param[in] token[in] Строковое представление операции.
+ * @param[out] errors Вектор для сохранения ошибок парсинга.
  */
 void processBinaryOperation(stack<exprNode*>& st, exprNodeType type, int pos, const string& token, vector<error>& errors);
 
 /**
  * @brief Обрабатывает операцию и создаёт соответствующий узел дерева выражения.
- * @param st Стек узлов дерева выражения.
- * @param token Строковое представление операции.
- * @param pos Позиция токена операции во входной строке.
- * @param errors Вектор для сохранения ошибок парсинга.
+ * @param[in,out] st Стек узлов дерева выражения.
+ * @param[in] token[in] Строковое представление операции.
+ * @param[in] pos[in] Позиция токена операции во входной строке.
+ * @param[out] errors Вектор для сохранения ошибок парсинга.
  */
 void processOperation(stack<exprNode*>& st, const string& token, int pos, vector<error>& errors);
 
@@ -252,8 +289,8 @@ int main(int argc, char* argv[]);
 
 /**
  * @brief Считывает и проверяет входной файл.
- * @param filename Путь к входному файлу.
- * @param line Ссылка на строку, в которую будет сохранено содержимое файла.
+ * @param[in] filename Путь к входному файлу.
+ * @param[out] line Cтрока, в которую будет сохранено содержимое файла.
  * @return true Если файл успешно считан и прошёл проверку.
  * @return false Если при чтении или проверке файла возникла ошибка.
  */
@@ -261,8 +298,8 @@ bool readInputFile(const char* filename, string& line);
 
 /**
  * @brief Вычисляет дерево выражения и сохраняет его графовое представление в файл.
- * @param filename Путь к выходному файлу.
- * @param root Указатель на корень дерева выражения.
+ * @param[in] filename Путь к выходному файлу.
+ * @param[in] root Указатель на корень дерева выражения.
  * @return true Если граф успешно записан в файл.
  * @return false Если выходной файл не удалось создать или открыть.
  */
@@ -270,6 +307,6 @@ bool saveGraph(const char* filename, exprNode* root);
 
 /**
  * @brief Выводит сообщения обо всех обнаруженных ошибках.
- * @param errors Вектор обнаруженных ошибок.
+ * @param[in] errors Вектор обнаруженных ошибок.
  */
 void printErrors(const vector<error>& errors);
