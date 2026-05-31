@@ -6,7 +6,7 @@
 #include <string>
 #include <algorithm>
 #include <utility>
-
+using namespace std;
  /**
   * @mainpage Вычисление троично-логического выражения
   * @author Игнатов Михаил Романович, ПрИн-266
