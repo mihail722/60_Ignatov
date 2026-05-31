@@ -257,12 +257,12 @@ void processOperation(stack<exprNode*>& st, const string& token, int pos, vector
     // Если тип операции - NOT
     if (type == NOT)
     {
-        processUnaryOperation(st, type, pos, token, errors); // Обработать бинарную операцию
+        processUnaryOperation(st, type, pos, token, errors); // Обработать унарную операцию
     } 
     // Иначе
     else
     {
-        processBinaryOperation(st, type, pos, token, errors); // Обработать унарную операцию
+        processBinaryOperation(st, type, pos, token, errors); // Обработать бинарную операцию
     }
 }
 
